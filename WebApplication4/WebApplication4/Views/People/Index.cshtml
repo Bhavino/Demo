@@ -102,12 +102,14 @@
                 <div class="form-group">
                     <div class="form-container">
                         <form id="myForm3" name="myForm3">
-                            <p>Please fill in the following detailsss. {{modalObject.Name}}</p>
-                            <input data-ng-model="modalObject2.Name" class="form-control" placeholder="Name" type="text" />
-                            <input data-ng-model="modalObject2.Sex"  class="form-control" placeholder="Gender" type="text" />
-                            <input data-ng-model="modalObject2.DOB" class="form-control" placeholder="Date Of Birth (MM/DD/YYYY)" type="text" />
-                            <input data-ng-model="modalObject2.Address" class="form-control" placeholder="Address" type="text" />
-                            <input data-ng-model="modalObject2.Money" class="form-control" placeholder="Income" type="number" /><br />
+                            <p>
+                                Please fill in the following details.
+                            </p>
+                            <input data-ng-model="formObject.Name" class="form-control" placeholder="Name" type="text" />
+                            <input data-ng-model="formObject.Sex" class="form-control" placeholder="Gender" type="text" />
+                            <input data-ng-model="formObject.DOB" class="form-control" placeholder="Date Of Birth (MM/DD/YYYY)" type="text" />
+                            <input data-ng-model="formObject.Address" class="form-control" placeholder="Address" type="text" />
+                            <input data-ng-model="formObject.Money" class="form-control" placeholder="Income" type="number" /><br />
                             <button ng-disabled="myForm3.$invalid" class="btn btn-primary form-button" data-ng-click="editData()">Submit</button>
                         </form>
                     </div>
@@ -124,7 +126,9 @@
                     <div class="form-container">
                         <form id="myForm2" name="myForm2">
                             <p>Here are the customer details.</p>
-                            <p><b>Customer ID</b>: {{modalObject.PersonID}}</p>
+                            <p>
+                                <b>Customer ID</b>: {{modalObject.PersonID}}
+                            </p>
                             <p><b>Name</b>: {{modalObject.Name}}</p>
                             <p><b>Gender</b>: {{modalObject.Sex}}</p>
                             <p><b>DOB</b>: {{modalObject.DOB}}</p>
@@ -148,7 +152,7 @@
 
         var iController = this;
 
-        //Api Angular Functions
+        //--------------------- [API]---------------------------------------
 
         //Create Data API Call From Angular
         function saveAPI(person) {
@@ -160,17 +164,7 @@
                 });
         }
 
-        //Edit Data API Call From Angular
-        function editAPI(person) {
-            var URL = "http://localhost:49330/api/test123/";
-            return $http(
-                {
-                    method: 'put',
-                    data: JSON.stringify(person),
-                    url: URL
-                });
-        }
-
+        //Edit Data API 2
         iController.editAPI2 = function (person) {
             return $http({
                 method: 'put',
@@ -178,16 +172,6 @@
                 url: "http://localhost:49330/api/test123/"
             });
         }
-
-
-        //$http({
-        //    method: 'put',
-        //    data: JSON.stringify({ PersonID: 2032, Name: "teeeeeeeeeeest", Sex: "test", DOB: "2/2/2", Address: "test", Money: 123 }),
-        //    url: "http://localhost:49330/api/test123/"
-        //});
-
-        ////http://localhost:49330/api/PeopleAPI/2032
-
 
         //Delete Data API Call From Angular
         iController.deleteAPI = function (ID) {
@@ -200,47 +184,33 @@
                 });
         }
 
-        $scope.rowCollection = [];
-        $scope.modalObject = { Name: "", Sex: "", DOB: "", Address: "", Money: "" };
+        //--------------------- [/API]---------------------------------------
 
+
+        //Initially gets all the data
+        $scope.rowCollection = [];
         $http.get("http://localhost:49330/api/PeopleAPI/LoadData").then(function (response) {
             $scope.rowCollection = response.data;
         });
 
 
-
-        //Get Data
+        //Updates/Refreshes/Gets Data
         iController.getData = function () {
-            var arr = $http.get("http://localhost:49330/api/PeopleAPI/LoadData").then(function (response) {
+            $http.get("http://localhost:49330/api/PeopleAPI/LoadData").then(function (response) {
                 $scope.rowCollection = response.data;
             });
-
-            return arr;
-        }
-
-        //Get Data By ID
-        $scope.getDataID = function (ID) {
-            $scope.modalObject = $scope.rowCollection.filter(x => x.PersonID == ID)[0];
-            $('#modal2').modal('show');
-        }
-
-        //Get Data By ID for Edit
-        $scope.getDataID2 = function (ID) {
-            $scope.modalObject2 = $scope.rowCollection.slice(0).filter(x => x.PersonID == ID)[0];
-            $('#modal3').modal('show');
         }
 
 
-        //Current Details Object
 
-
+        //--------------------- [Functions]---------------------------------------
 
         //Sava Data Function
         $scope.saveData = function () {
 
             var person = { Name: $scope.name, Sex: $scope.gender, DOB: $scope.dob, Address: $scope.address, Money: $scope.income };
 
-            
+
             var saveSubs = saveAPI(person);
             saveSubs.then(function (d) {
                 $('#modal1').modal('hide');
@@ -255,24 +225,22 @@
             })
         };
 
-        
-
         //Edit Data Function
         $scope.editData = function () {
 
-            var person = { PersonID: $scope.modalObject2.PersonID, Name: $scope.modalObject2.Name, Sex: $scope.modalObject2.Sex, DOB: "2/2/2", Address: $scope.modalObject2.Address, Money: $scope.modalObject2.Money }
-
+            var person = $scope.formObject;
+            person.DOB = "2/2/2";
 
             var editFunction = iController.editAPI2(person);
 
-           editFunction.then(function (d) {
+            editFunction.then(function (d) {
 
-               $('#modal3').modal('hide');
+                $('#modal3').modal('hide');
 
-               iController.getData();
+                iController.getData();
 
-               document.getElementById("myForm3").reset();
-               console.log("Successfully inserted data!");
+                //document.getElementById("myForm3").reset();
+                console.log("Successfully inserted data!");
 
 
 
@@ -280,7 +248,17 @@
                 console.log('Oops! Something went wrong while saving the data.');
             })
         };
-        
+
+        //Details Method, Gets data by ID
+        $scope.getDataID = function (ID) {
+            $scope.modalObject = $scope.rowCollection.filter(x => x.PersonID == ID)[0];
+            $('#modal2').modal('show');
+        }
+
+        $scope.getDataID2 = function (ID) {
+            $scope.formObject = $scope.rowCollection.filter(x => x.PersonID == ID)[0];
+            $('#modal3').modal('show');
+        }
 
 
 
@@ -294,6 +272,7 @@
             })
         };
 
+        //--------------------- [/Functions]---------------------------------------
     }]);
 </script>
 

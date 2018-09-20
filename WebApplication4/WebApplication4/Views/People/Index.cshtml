@@ -1,0 +1,300 @@
+﻿@model IEnumerable<WebApplication4.Person>
+
+@{
+    ViewBag.Title = "Index";
+
+}
+
+<script src="~/StudentClient.js"></script>
+<style>
+    .form-container {
+        padding: 10px;
+        width: 300px;
+        margin-left: auto;
+        margin-right: auto;
+        text-align: center;
+    }
+
+    .form-button {
+        margin-top: 10px;
+    }
+</style>
+
+
+<h2>Index</h2>
+
+<button type="button" class="btn btn-primary" data-toggle="modal" data-target="#modal1">Create New Customer</button><br /><br />
+
+
+<div ng-app="myApplication" ng-controller="safeCtrl" accesskey="">
+
+    <table st-table="displayedCollection" st-safe-src="rowCollection" class="table table-striped">
+        <thead>
+            <tr>
+                <th>
+                    <input st-search="Name" class="form-control" placeholder="Name" type="text" />
+                </th>
+                <th>
+                    <input st-search="Sex" class="form-control" placeholder="Gender" type="text" />
+                </th>
+                <th>
+                    <input st-search="DOB" class="form-control" placeholder="Date Of Birth" type="text" />
+                </th>
+                <th>
+                    <input st-search="Address" class="form-control" placeholder="Address" type="text" />
+                </th>
+                <th>
+                    <input st-search="Money" class="form-control" placeholder="Income" type="text" />
+                </th>
+
+            </tr>
+
+            <tr>
+                <th st-sort="Name"> @Html.DisplayNameFor(model => model.Name)</th>
+                <th st-sort="Sex"> @Html.DisplayNameFor(model => model.Sex)</th>
+                <th st-sort="DOB"> @Html.DisplayNameFor(model => model.DOB)</th>
+                <th st-sort="Address"> @Html.DisplayNameFor(model => model.Address)</th>
+                <th st-sort="Money">@Html.DisplayNameFor(model => model.Money)</th>
+
+            </tr>
+
+        </thead>
+        <tbody>
+            <tr ng-repeat="row in displayedCollection">
+                <td>{{row.Name}}</td>
+                <td>{{row.Sex}}</td>
+                <td>{{row.DOB}}</td>
+                <td>{{row.Address}}</td>
+                <td>${{row.Money}}</td>
+                <td><a data-ng-click="getDataID2(row.PersonID)" href="#">Edit</a></td>
+                <td><a data-ng-click="getDataID(row.PersonID)" href="#">Details</a></td>
+                <td><a data-ng-click="deleteData(row.PersonID)" href="#">Delete</a></td>
+            </tr>
+        </tbody>
+    </table>
+
+
+    <!-- Small modal -->
+
+    <div id="modal1" class="modal fade bd-example-modal-sm" tabindex="-1" role="dialog" aria-labelledby="mySmallModalLabel" aria-hidden="true">
+        <div class="modal-dialog modal-sm">
+            <div class="modal-content">
+                <div class="form-group">
+                    <div class="form-container">
+                        <form id="myForm" name="myForm">
+                            <p>Please fill in the following details.</p>
+                            <input data-ng-model="name" class="form-control" placeholder="Name" type="text" required />
+                            <input data-ng-model="gender" class="form-control" placeholder="Gender" type="text" required />
+                            <input data-ng-model="dob" class="form-control" placeholder="Date Of Birth (MM/DD/YYYY)" type="text" required />
+                            <input data-ng-model="address" class="form-control" placeholder="Address" type="text" required />
+                            <input data-ng-model="income" class="form-control" placeholder="Income" type="text" required /><br />
+                            <button ng-disabled="myForm.$invalid" class="btn btn-primary form-button" data-ng-click="saveData()">Submit</button>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div id="modal3" class="modal fade bd-example-modal-sm" tabindex="-1" role="dialog" aria-labelledby="mySmallModalLabel" aria-hidden="true">
+        <div class="modal-dialog modal-sm">
+            <div class="modal-content">
+                <div class="form-group">
+                    <div class="form-container">
+                        <form id="myForm3" name="myForm3">
+                            <p>Please fill in the following detailsss. {{modalObject.Name}}</p>
+                            <input data-ng-model="modalObject2.Name" class="form-control" placeholder="Name" type="text" />
+                            <input data-ng-model="modalObject2.Sex"  class="form-control" placeholder="Gender" type="text" />
+                            <input data-ng-model="modalObject2.DOB" class="form-control" placeholder="Date Of Birth (MM/DD/YYYY)" type="text" />
+                            <input data-ng-model="modalObject2.Address" class="form-control" placeholder="Address" type="text" />
+                            <input data-ng-model="modalObject2.Money" class="form-control" placeholder="Income" type="number" /><br />
+                            <button ng-disabled="myForm3.$invalid" class="btn btn-primary form-button" data-ng-click="editData()">Submit</button>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+    <div id="modal2" class="modal fade bd-example-modal-sm" tabindex="-1" role="dialog" aria-labelledby="mySmallModalLabel" aria-hidden="true">
+        <div class="modal-dialog modal-sm">
+            <div class="modal-content">
+                <div class="form-group">
+                    <div class="form-container">
+                        <form id="myForm2" name="myForm2">
+                            <p>Here are the customer details.</p>
+                            <p><b>Customer ID</b>: {{modalObject.PersonID}}</p>
+                            <p><b>Name</b>: {{modalObject.Name}}</p>
+                            <p><b>Gender</b>: {{modalObject.Sex}}</p>
+                            <p><b>DOB</b>: {{modalObject.DOB}}</p>
+                            <p><b>Address</b>: {{modalObject.Address}}</p>
+                            <p><b>Money</b>: ${{modalObject.Money}}</p>
+                            <button data-toggle="modal" data-target="#modal2" class="btn btn-primary form-button">Close</button>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+
+
+
+<script>
+    angular.module("myApplication", ["smart-table"]).controller('safeCtrl', ['$scope', '$http', function ($scope, $http) {
+
+        var iController = this;
+
+        //Api Angular Functions
+
+        //Create Data API Call From Angular
+        function saveAPI(person) {
+            return $http(
+                {
+                    method: 'post',
+                    data: person,
+                    url: 'http://localhost:49330/api/PeopleAPI'
+                });
+        }
+
+        //Edit Data API Call From Angular
+        function editAPI(person) {
+            var URL = "http://localhost:49330/api/test123/";
+            return $http(
+                {
+                    method: 'put',
+                    data: JSON.stringify(person),
+                    url: URL
+                });
+        }
+
+        iController.editAPI2 = function (person) {
+            return $http({
+                method: 'put',
+                data: JSON.stringify(person),
+                url: "http://localhost:49330/api/test123/"
+            });
+        }
+
+
+        //$http({
+        //    method: 'put',
+        //    data: JSON.stringify({ PersonID: 2032, Name: "teeeeeeeeeeest", Sex: "test", DOB: "2/2/2", Address: "test", Money: 123 }),
+        //    url: "http://localhost:49330/api/test123/"
+        //});
+
+        ////http://localhost:49330/api/PeopleAPI/2032
+
+
+        //Delete Data API Call From Angular
+        iController.deleteAPI = function (ID) {
+            var url = 'http://localhost:49330/api/PeopleAPI/' + ID;
+            return $http(
+                {
+                    method: 'delete',
+                    data: ID,
+                    url: url
+                });
+        }
+
+        $scope.rowCollection = [];
+        $scope.modalObject = { Name: "", Sex: "", DOB: "", Address: "", Money: "" };
+
+        $http.get("http://localhost:49330/api/PeopleAPI/LoadData").then(function (response) {
+            $scope.rowCollection = response.data;
+        });
+
+
+
+        //Get Data
+        iController.getData = function () {
+            var arr = $http.get("http://localhost:49330/api/PeopleAPI/LoadData").then(function (response) {
+                $scope.rowCollection = response.data;
+            });
+
+            return arr;
+        }
+
+        //Get Data By ID
+        $scope.getDataID = function (ID) {
+            $scope.modalObject = $scope.rowCollection.filter(x => x.PersonID == ID)[0];
+            $('#modal2').modal('show');
+        }
+
+        //Get Data By ID for Edit
+        $scope.getDataID2 = function (ID) {
+            $scope.modalObject2 = $scope.rowCollection.slice(0).filter(x => x.PersonID == ID)[0];
+            $('#modal3').modal('show');
+        }
+
+
+        //Current Details Object
+
+
+
+        //Sava Data Function
+        $scope.saveData = function () {
+
+            var person = { Name: $scope.name, Sex: $scope.gender, DOB: $scope.dob, Address: $scope.address, Money: $scope.income };
+
+            
+            var saveSubs = saveAPI(person);
+            saveSubs.then(function (d) {
+                $('#modal1').modal('hide');
+                $http.get("http://localhost:49330/api/PeopleAPI/LoadData").then(function (response) {
+                    $scope.rowCollection = response.data;
+                });
+                document.getElementById("myForm").reset();
+                console.log("Successfully inserted data!");
+
+            }, function (error) {
+                console.log('Oops! Something went wrong while saving the data.');
+            })
+        };
+
+        
+
+        //Edit Data Function
+        $scope.editData = function () {
+
+            var person = { PersonID: $scope.modalObject2.PersonID, Name: $scope.modalObject2.Name, Sex: $scope.modalObject2.Sex, DOB: "2/2/2", Address: $scope.modalObject2.Address, Money: $scope.modalObject2.Money }
+
+
+            var editFunction = iController.editAPI2(person);
+
+           editFunction.then(function (d) {
+
+               $('#modal3').modal('hide');
+
+               iController.getData();
+
+               document.getElementById("myForm3").reset();
+               console.log("Successfully inserted data!");
+
+
+
+            }, function (error) {
+                console.log('Oops! Something went wrong while saving the data.');
+            })
+        };
+        
+
+
+
+        //Delete Data Function
+        $scope.deleteData = function (subID) {
+            var dlt = iController.deleteAPI(subID);
+            dlt.then(function (d) {
+                $scope.rowCollection = iController.getData();
+            }, function (error) {
+                console.log('Oops! Something went wrong while deleting the data.')
+            })
+        };
+
+    }]);
+</script>
+
+

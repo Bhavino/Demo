@@ -1,0 +1,26 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Schema Namespace="DemoDBModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+  <EntityType Name="Person">
+    <Key>
+      <PropertyRef Name="PersonID" />
+    </Key>
+    <Property Name="PersonID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="Name" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+    <Property Name="Sex" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+    <Property Name="DOB" Type="DateTime" Precision="3" />
+    <Property Name="Address" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+    <Property Name="Money" Type="Decimal" Precision="19" Scale="4" />
+  </EntityType>
+  <EntityContainer Name="DemoDBEntities1" annotation:LazyLoadingEnabled="true">
+    <EntitySet Name="People" EntityType="Self.Person" />
+    <FunctionImport Name="procLoadData" ReturnType="Collection(DemoDBModel.procLoadData_Result)" />
+  </EntityContainer>
+  <ComplexType Name="procLoadData_Result">
+    <Property Type="Int32" Name="PersonID" Nullable="false" />
+    <Property Type="String" Name="Name" Nullable="true" />
+    <Property Type="String" Name="Address" Nullable="true" />
+    <Property Type="DateTime" Name="DOB" Nullable="true" Precision="23" />
+    <Property Type="Decimal" Name="Money" Nullable="true" Precision="19" Scale="4" />
+    <Property Type="String" Name="Sex" Nullable="true" />
+  </ComplexType>
+</Schema>

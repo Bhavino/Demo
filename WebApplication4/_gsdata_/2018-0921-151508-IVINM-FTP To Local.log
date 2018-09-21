@@ -1,0 +1,22 @@
+2018-09-21 15:15:08: -- Analysis Started by User Command
+2018-09-21 15:15:08: L: State file does not exist: C:/Users/iVin/source/repos/WebApplication4/_gsdata_/_file_state_v4._gs
+2018-09-21 15:15:08: R: State file does not exist: C:/Users/iVin/Documents/Git/Demo/WebApplication4/_gsdata_/_file_state_v4._gs
+2018-09-21 15:15:08: Changes: 6, Conflicts: 0, CopyTime: 0, FixState: 2,515, Errors: 0, All: 2522
+2018-09-21 15:15:08: Left to Right: Copy File: 5 Delete File: 1 
+2018-09-21 15:15:08: -- Analysis Complete. Time 00:00:00, Speed: Many files/s
+2018-09-21 15:15:08: 
+2018-09-21 15:18:59: == Sync Started by User Command
+2018-09-21 15:18:59: Delete File 'C:/Users/iVin/Documents/Git/Demo/WebApplication4/WebApplication4/Views/People/Index.cshtml.rej'
+- ERROR: The system cannot find the file specified.  (error 2)
+2018-09-21 15:18:59: Copy Over 'C:/Users/iVin/source/repos/WebApplication4/.vs/WebApplication4/v15/.suo' -> 'C:/Users/iVin/Documents/Git/Demo/WebApplication4/.vs/WebApplication4/v15/.suo' (132,608)
+2018-09-21 15:18:59: Copy Over 'C:/Users/iVin/source/repos/WebApplication4/.vs/WebApplication4/v15/Server/sqlite3/storage.ide-shm' -> 'C:/Users/iVin/Documents/Git/Demo/WebApplication4/.vs/WebApplication4/v15/Server/sqlite3/storage.ide-shm' (32,768)
+2018-09-21 15:18:59: Copy Over 'C:/Users/iVin/source/repos/WebApplication4/.vs/WebApplication4/v15/Server/sqlite3/storage.ide-wal' -> 'C:/Users/iVin/Documents/Git/Demo/WebApplication4/.vs/WebApplication4/v15/Server/sqlite3/storage.ide-wal' (1,981,752)
+2018-09-21 15:18:59: Copy Over 'C:/Users/iVin/source/repos/WebApplication4/WebApplication4/obj/Release/WebApplication4.csproj.CopyComplete' -> 'C:/Users/iVin/Documents/Git/Demo/WebApplication4/WebApplication4/obj/Release/WebApplication4.csproj.CopyComplete' (0)
+2018-09-21 15:18:59: Copy Over 'C:/Users/iVin/source/repos/WebApplication4/WebApplication4/Views/People/Index.cshtml' -> 'C:/Users/iVin/Documents/Git/Demo/WebApplication4/WebApplication4/Views/People/Index.cshtml' (11,114)
+2018-09-21 15:18:59: == Sync Complete. Time: 00:00:00, Speed: 0 bytes/s, OK: 2,520, Errors: 1
+2018-09-21 15:18:59: 
+2018-09-21 15:19:09: == Sync Started by User Command
+2018-09-21 15:19:09: Delete File 'C:/Users/iVin/Documents/Git/Demo/WebApplication4/WebApplication4/Views/People/Index.cshtml.rej'
+- ERROR: The system cannot find the file specified.  (error 2)
+2018-09-21 15:19:09: == Sync Complete. Time: 00:00:00, Speed: 0 bytes/s, OK: 0, Errors: 1
+2018-09-21 15:19:09: 

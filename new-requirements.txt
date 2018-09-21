@@ -1,16 +1,5 @@
-1. Complete function Create new customer
-  -
-2. Complete function Delete 01 customer => need modal show info
-  - Have a confirmation modal
-
-3. Complete function Edit customer => need update button close => restore data
-
-4. Upgrade UI for dob
-  - datetime picker (angular feature)
-  - it prevents the user from keying in incorrect data
-
-5. Upgrade logic: validate input : create / edit customer
-    - It needs better logic when certain text are entered (Client and server)
-    - Invalid !@#$ characters
-    - Max length, Min length, Empty
-    - Incorrect data type
+1. Delete confirmation
+2. Revert data if edit cancelled
+3. Add datetime picker B
+4. Validate input (client side) B
+5. Validate input (server side)

@@ -28,6 +28,9 @@ namespace WebApplication4
             bundles.Add(new ScriptBundle("~/bundles/smart-table").Include(
                                               "~/Scripts/smart-table.js"));
 
+            bundles.Add(new ScriptBundle("~/bundles/application-controller").Include(
+                                                          "~/Angular/ApplicationController.js"));
+
 
 
             bundles.Add(new StyleBundle("~/Content/css").Include(

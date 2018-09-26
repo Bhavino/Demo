@@ -14,7 +14,7 @@ namespace WebApplication4.Controllers
 {
     public class PeopleAPIController : ApiController
     {
-        private DemoDBEntities1 db = new DemoDBEntities1();
+        private DemoDBEntities db = new DemoDBEntities();
 
         [HttpGet]
         [Route("api/PeopleAPI/LoadData")]

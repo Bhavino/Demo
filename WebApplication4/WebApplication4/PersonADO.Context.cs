@@ -15,10 +15,10 @@ namespace WebApplication4
     using System.Data.Entity.Core.Objects;
     using System.Linq;
     
-    public partial class DemoDBEntities1 : DbContext
+    public partial class DemoDBEntities : DbContext
     {
-        public DemoDBEntities1()
-            : base("name=DemoDBEntities1")
+        public DemoDBEntities()
+            : base("name=DemoDBEntities")
         {
         }
     

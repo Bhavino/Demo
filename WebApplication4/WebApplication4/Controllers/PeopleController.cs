@@ -14,7 +14,7 @@ namespace WebApplication4.Controllers
 {
     public class PeopleController : Controller
     {
-        private DemoDBEntities1 db = new DemoDBEntities1();
+        private DemoDBEntities db = new DemoDBEntities();
 
         // GET: People
         public ActionResult Index()

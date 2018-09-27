@@ -2,7 +2,6 @@
 
 @{
     ViewBag.Title = "Index";
-
 }
 
 <style>
@@ -19,14 +18,13 @@
     }
 </style>
 
-
 <h2>Index</h2>
 
 <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#modal1">Create New Customer</button><br /><br />
-
-
 <div ng-app="myApplication" ng-controller="safeCtrl" accesskey="">
-    <b>Total Records: </b>{{rowCollection.length}}
+
+    <p><b>Total Records: </b>{{rowCollection.length}}</p>
+
     <table st-table="displayedCollection" st-safe-src="rowCollection" class="table table-striped">
         <thead>
             <tr>
@@ -45,7 +43,6 @@
                 <th>
                     <input st-search="Money" class="form-control" placeholder="Income" type="text" />
                 </th>
-
             </tr>
 
             <tr>
@@ -54,7 +51,6 @@
                 <th st-sort="DOB"> @Html.DisplayNameFor(model => model.DOB)</th>
                 <th st-sort="Address"> @Html.DisplayNameFor(model => model.Address)</th>
                 <th st-sort="Money">@Html.DisplayNameFor(model => model.Money)</th>
-
             </tr>
 
         </thead>
@@ -67,14 +63,14 @@
                 <td>${{row.Money}}</td>
                 <td><a data-ng-click="getDataID2(row.PersonID)" href="#">Edit</a></td>
                 <td><a data-ng-click="getDataID(row.PersonID)" href="#">Details</a></td>
-                <td><a data-ng-click="deleteData(row.PersonID)" href="#">Delete</a></td>
+                <td><a data-ng-click="deleteConfirmModal(row.PersonID)" href="#">Delete</a></td>
             </tr>
         </tbody>
     </table>
 
+    <!-- Modals -->
 
-    <!-- Small modal -->
-
+    <!-- Customer Creation Modal -->
     <div id="modal1" class="modal fade bd-example-modal-sm" tabindex="-1" role="dialog" aria-labelledby="mySmallModalLabel" aria-hidden="true">
         <div class="modal-dialog modal-sm">
             <div class="modal-content">
@@ -95,6 +91,31 @@
         </div>
     </div>
 
+    <!-- Customer Details Modal-->
+    <div id="modal2" class="modal fade bd-example-modal-sm" tabindex="-1" role="dialog" aria-labelledby="mySmallModalLabel" aria-hidden="true">
+        <div class="modal-dialog modal-sm">
+            <div class="modal-content">
+                <div class="form-group">
+                    <div class="form-container">
+                        <form id="myForm2" name="myForm2">
+                            <p>Here are the customer details.</p>
+                            <p>
+                                <b>Customer ID</b>: {{modalObject.PersonID}}
+                            </p>
+                            <p><b>Name</b>: {{modalObject.Name}}</p>
+                            <p><b>Gender</b>: {{modalObject.Sex}}</p>
+                            <p><b>DOB</b>: {{modalObject.DOB}}</p>
+                            <p><b>Address</b>: {{modalObject.Address}}</p>
+                            <p><b>Money</b>: ${{modalObject.Money}}</p>
+                            <button data-toggle="modal" data-target="#modal2" class="btn btn-primary form-button">Close</button>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Customer Edit Modal -->
     <div id="modal3" class="modal fade bd-example-modal-sm" tabindex="-1" role="dialog" aria-labelledby="mySmallModalLabel" aria-hidden="true">
         <div class="modal-dialog modal-sm">
             <div class="modal-content">
@@ -120,23 +141,24 @@
         </div>
     </div>
 
-
-    <div id="modal2" class="modal fade bd-example-modal-sm" tabindex="-1" role="dialog" aria-labelledby="mySmallModalLabel" aria-hidden="true">
+    <!-- Delete Confirmation Modal -->
+    <div id="deleteModal" class="modal fade bd-example-modal-sm" tabindex="-1" role="dialog" aria-labelledby="mySmallModalLabel" aria-hidden="true">
         <div class="modal-dialog modal-sm">
             <div class="modal-content">
                 <div class="form-group">
                     <div class="form-container">
-                        <form id="myForm2" name="myForm2">
-                            <p>Here are the customer details.</p>
+                        <form id="deleteForm" name="deleteForm">
+                            <p>Are you sure you want to delete this record?</p>
                             <p>
-                                <b>Customer ID</b>: {{modalObject.PersonID}}
+                                <b>Customer ID</b>: {{deleteRecord.PersonID}}
                             </p>
-                            <p><b>Name</b>: {{modalObject.Name}}</p>
-                            <p><b>Gender</b>: {{modalObject.Sex}}</p>
-                            <p><b>DOB</b>: {{modalObject.DOB}}</p>
-                            <p><b>Address</b>: {{modalObject.Address}}</p>
-                            <p><b>Money</b>: ${{modalObject.Money}}</p>
-                            <button data-toggle="modal" data-target="#modal2" class="btn btn-primary form-button">Close</button>
+                            <p><b>Name</b>: {{deleteRecord.Name}}</p>
+                            <p><b>Gender</b>: {{deleteRecord.Sex}}</p>
+                            <p><b>DOB</b>: {{deleteRecord.DOB}}</p>
+                            <p><b>Address</b>: {{deleteRecord.Address}}</p>
+                            <p><b>Money</b>: ${{deleteRecord.Money}}</p>
+                            <button data-toggle="modal" data-target="#deleteModal" class="btn btn-primary form-button" data-ng-click="deleteData(deleteRecord.PersonID)">Confirm</button>
+                            <button data-toggle="modal" data-target="#deleteModal" class="btn btn-primary form-button">Cancel</button>
                         </form>
                     </div>
                 </div>
@@ -144,7 +166,7 @@
         </div>
     </div>
 
-    <b>Total Records: </b>{{rowCollection.length}}
+    <p><b>Total Records: </b>{{rowCollection.length}}</p>
 </div>
 
 @Scripts.Render("~/bundles/application-controller")

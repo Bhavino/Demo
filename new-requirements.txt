@@ -1,5 +1,10 @@
-1. Delete confirmation
-2. Revert data if edit cancelled
-3. Add datetime picker B
-4. Validate input (client side) B
-5. Validate input (server side)
+KP
+
+- Delete confirmation
+- Revert data if edit is cancelled
+- Validate Input (Server Side)
+
+BM
+
+- Add datetime picker
+- Validate input (Client Side)

@@ -25,7 +25,7 @@
 
     //Delete Data API Call From Angular
     iController.deleteAPI = function (ID) {
-        var url = 'http://localhost:49330/api/PeopleAPI/' + ID;
+        var url = '/api/PeopleAPI/' + ID;
         return $http(
             {
                 method: 'delete',
@@ -39,32 +39,32 @@
 
     //Initially gets all the data
     $scope.rowCollection = [];
-    $http.get("http://localhost:49330/api/PeopleAPI/LoadData").then(function (response) {
+    $http.get("/api/PeopleAPI/LoadData").then(function (response) {
         $scope.rowCollection = response.data;
     });
 
 
     //Updates/Refreshes/Gets Data
     iController.getData = function () {
-        $http.get("http://localhost:49330/api/PeopleAPI/LoadData").then(function (response) {
+        $http.get("/api/PeopleAPI/LoadData").then(function (response) {
             $scope.rowCollection = response.data;
         });
-    }
+    };
 
 
 
     //--------------------- [Functions]---------------------------------------
 
     //Sava Data Function
+    //After pressing save button
     $scope.saveData = function () {
 
         var person = { Name: $scope.name, Sex: $scope.gender, DOB: $scope.dob, Address: $scope.address, Money: $scope.income };
 
-
         var saveSubs = saveAPI(person);
         saveSubs.then(function (d) {
             $('#modal1').modal('hide');
-            $http.get("http://localhost:49330/api/PeopleAPI/LoadData").then(function (response) {
+            $http.get("/api/PeopleAPI/LoadData").then(function (response) {
                 $scope.rowCollection = response.data;
             });
             document.getElementById("myForm").reset();
@@ -92,25 +92,10 @@
             //document.getElementById("myForm3").reset();
             console.log("Successfully inserted data!");
 
-
-
         }, function (error) {
             console.log('Oops! Something went wrong while saving the data.');
         })
     };
-
-    //Details Method, Gets data by ID
-    $scope.getDataID = function (ID) {
-        $scope.modalObject = $scope.rowCollection.filter(x => x.PersonID == ID)[0];
-        $('#modal2').modal('show');
-    }
-
-    $scope.getDataID2 = function (ID) {
-        $scope.formObject = $scope.rowCollection.filter(x => x.PersonID == ID)[0];
-        $('#modal3').modal('show');
-    }
-
-
 
     //Delete Data Function
     $scope.deleteData = function (subID) {
@@ -121,6 +106,26 @@
             console.log('Oops! Something went wrong while deleting the data.')
         })
     };
+
+    /* Modals */
+
+    //Details Method, Gets data by ID
+    $scope.getDataID = function (ID) {
+        $scope.modalObject = $scope.rowCollection.filter(x => x.PersonID == ID)[0];
+        $('#modal2').modal('show');
+    };
+
+    //Edit Modal, shows details of particular row id
+    $scope.getDataID2 = function (ID) {
+        $scope.formObject = $scope.rowCollection.filter(x => x.PersonID == ID)[0];
+        $('#modal3').modal('show');
+    };
+
+    //Displays delete modal
+    $scope.deleteConfirmModal = function (ID) {
+        $scope.deleteRecord = $scope.rowCollection.filter(x => x.PersonID == ID)[0];
+        $('#deleteModal').modal('show');
+    }
 
     //--------------------- [/Functions]---------------------------------------
 }]);

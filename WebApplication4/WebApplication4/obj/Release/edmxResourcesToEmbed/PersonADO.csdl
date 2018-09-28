@@ -11,7 +11,7 @@
     <Property Name="Address" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
     <Property Name="Money" Type="Decimal" Precision="19" Scale="4" />
   </EntityType>
-  <EntityContainer Name="DemoDBEntities1" annotation:LazyLoadingEnabled="true">
+  <EntityContainer Name="DemoDBEntities" annotation:LazyLoadingEnabled="true">
     <EntitySet Name="People" EntityType="Self.Person" />
     <FunctionImport Name="procLoadData" ReturnType="Collection(DemoDBModel.procLoadData_Result)" />
   </EntityContainer>

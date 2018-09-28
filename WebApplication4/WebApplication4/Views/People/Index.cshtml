@@ -63,7 +63,7 @@
                 <td>${{row.Money}}</td>
                 <td><a data-ng-click="getDataID2(row.PersonID)" href="#">Edit</a></td>
                 <td><a data-ng-click="getDataID(row.PersonID)" href="#">Details</a></td>
-                <td><a data-ng-click="deleteConfirmModal(row.PersonID)" href="#">Delete</a></td>
+                <td><a data-ng-click="deleteConfirm(row.PersonID)" href="#">Delete</a></td>
             </tr>
         </tbody>
     </table>
@@ -170,4 +170,3 @@
 </div>
 
 @Scripts.Render("~/bundles/application-controller")
-

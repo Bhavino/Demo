@@ -401,8 +401,8 @@ C:\Users\phamk\Documents\workspace\Git\Demo-kp-branch\WebApplication4\WebApplica
 C:\Users\phamk\Documents\workspace\Git\Demo-kp-branch\WebApplication4\WebApplication4\bin\ru\System.Spatial.resources.dll
 C:\Users\phamk\Documents\workspace\Git\Demo-kp-branch\WebApplication4\WebApplication4\bin\zh-Hans\System.Spatial.resources.dll
 C:\Users\phamk\Documents\workspace\Git\Demo-kp-branch\WebApplication4\WebApplication4\bin\zh-Hant\System.Spatial.resources.dll
-C:\Users\phamk\Documents\workspace\Git\Demo-kp-branch\WebApplication4\WebApplication4\obj\Release\WebApplication4.csprojAssemblyReference.cache
 C:\Users\phamk\Documents\workspace\Git\Demo-kp-branch\WebApplication4\WebApplication4\obj\Release\WebApplication4.csproj.CoreCompileInputs.cache
 C:\Users\phamk\Documents\workspace\Git\Demo-kp-branch\WebApplication4\WebApplication4\obj\Release\WebApplication4.csproj.CopyComplete
 C:\Users\phamk\Documents\workspace\Git\Demo-kp-branch\WebApplication4\WebApplication4\obj\Release\WebApplication4.dll
 C:\Users\phamk\Documents\workspace\Git\Demo-kp-branch\WebApplication4\WebApplication4\obj\Release\WebApplication4.pdb
+C:\Users\phamk\Documents\workspace\Git\Demo-kp-branch\WebApplication4\WebApplication4\obj\Release\WebApplication4.csprojAssemblyReference.cache

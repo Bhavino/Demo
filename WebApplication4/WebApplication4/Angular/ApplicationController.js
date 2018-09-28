@@ -10,7 +10,7 @@
             {
                 method: 'post',
                 data: person,
-                url: 'http://localhost:49330/api/PeopleAPI'
+                url: "/api/PeopleAPI"
             });
     }
 
@@ -19,13 +19,13 @@
         return $http({
             method: 'put',
             data: JSON.stringify(person),
-            url: "http://localhost:49330/api/test123/"
+            url: "/api/test123/"
         });
     }
 
     //Delete Data API Call From Angular
     iController.deleteAPI = function (ID) {
-        var url = '/api/PeopleAPI/' + ID;
+        var url = "/api/PeopleAPI/" + ID;
         return $http(
             {
                 method: 'delete',
@@ -51,12 +51,9 @@
         });
     };
 
-
-
     //--------------------- [Functions]---------------------------------------
 
     //Sava Data Function
-    //After pressing save button
     $scope.saveData = function () {
 
         var person = { Name: $scope.name, Sex: $scope.gender, DOB: $scope.dob, Address: $scope.address, Money: $scope.income };
@@ -79,7 +76,7 @@
     $scope.editData = function () {
 
         var person = $scope.formObject;
-        person.DOB = "2/2/2";
+        //person.DOB = "2/2/2";
 
         var editFunction = iController.editAPI2(person);
 
@@ -117,12 +114,12 @@
 
     //Edit Modal, shows details of particular row id
     $scope.getDataID2 = function (ID) {
-        $scope.formObject = $scope.rowCollection.filter(x => x.PersonID == ID)[0];
+        $scope.formObject = angular.copy($scope.rowCollection.filter(x => x.PersonID == ID)[0]);
         $('#modal3').modal('show');
     };
 
     //Displays delete modal
-    $scope.deleteConfirmModal = function (ID) {
+    $scope.deleteConfirm = function (ID) {
         $scope.deleteRecord = $scope.rowCollection.filter(x => x.PersonID == ID)[0];
         $('#deleteModal').modal('show');
     }

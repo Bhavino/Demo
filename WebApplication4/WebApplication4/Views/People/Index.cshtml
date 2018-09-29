@@ -8,7 +8,6 @@
 <style>
     .form-container {
         padding: 10px;
-        width: 300px;
         margin-left: auto;
         margin-right: auto;
         text-align: center;
@@ -19,13 +18,15 @@
     }
 </style>
 
+<script src="https://cdnjs.cloudflare.com/ajax/libs/underscore.js/1.8.3/underscore-min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.10.6/moment.min.js"></script>
 
 <h2>Index</h2>
-
-<button type="button" class="btn btn-primary" data-toggle="modal" data-target="#modal1">Create New Customer</button><br /><br />
-
-
 <div ng-app="myApplication" ng-controller="safeCtrl" accesskey="">
+    <button type="button" class="btn btn-primary" data-ng-click="openCreate()">Create New Customer</button><br /><br />
+
+
+
     <b>Total Records: </b>{{rowCollection.length}}
     <table st-table="displayedCollection" st-safe-src="rowCollection" class="table table-striped">
         <thead>
@@ -51,7 +52,7 @@
             <tr>
                 <th st-sort="Name"> @Html.DisplayNameFor(model => model.Name)</th>
                 <th st-sort="Sex"> @Html.DisplayNameFor(model => model.Sex)</th>
-                <th st-sort="DOB"> @Html.DisplayNameFor(model => model.DOB)</th>
+                <th st-sort="DOB"> DOB (YYYY/MM/DD)</th>
                 <th st-sort="Address"> @Html.DisplayNameFor(model => model.Address)</th>
                 <th st-sort="Money">@Html.DisplayNameFor(model => model.Money)</th>
 
@@ -62,7 +63,7 @@
             <tr ng-repeat="row in displayedCollection">
                 <td>{{row.Name}}</td>
                 <td>{{row.Sex}}</td>
-                <td>{{row.DOB}}</td>
+                <td>{{row.DOB | date:'yyyy/MM/dd'}}</td>
                 <td>{{row.Address}}</td>
                 <td>${{row.Money}}</td>
                 <td><a data-ng-click="getDataID2(row.PersonID)" href="#">Edit</a></td>
@@ -73,21 +74,108 @@
     </table>
 
 
-    <!-- Small modal -->
 
-    <div id="modal1" class="modal fade bd-example-modal-sm" tabindex="-1" role="dialog" aria-labelledby="mySmallModalLabel" aria-hidden="true">
-        <div class="modal-dialog modal-sm">
+    <!-- Create data modal -->
+    <div id="modal1" class="modal fade bd-example-modal-lg" tabindex="-1" role="dialog" aria-labelledby="mySmallModalLabel" aria-hidden="true">
+        <div class="modal-dialog modal-lg">
             <div class="modal-content">
                 <div class="form-group">
                     <div class="form-container">
-                        <form id="myForm" name="myForm">
+
+
+                        @*<form id="myForm" name="myForm" class="form-horizontal">
+
+
+                                <div class="form-group">
+
+                                        <input data-ng-model="name" id="name" class="form-control" type="text" placeholder="Name" name="name" required>
+                                        <span class="messages"></span>
+
+                                </div>
+
+                                <div class="form-group">
+
+
+                                        <label class="radio-inline">
+                                            <input data-ng-model="gender" type="radio" name="optradio" checked>Option 1
+                                        </label>
+                                        <label class="radio-inline">
+                                            <input data-ng-model="gender" type="radio" name="optradio">Option 2
+                                        </label>
+
+                                        <span class="messages"></span>
+
+
+                                </div>
+
+                                <div class="form-group">
+
+
+                                        <input id="dob" class="form-control" type="date" placeholder="YYYY-MM-DD" name="dob">
+                                        <span class="messages"></span>
+
+
+                                </div>
+
+                                <div class="form-group">
+
+
+                                        <input data-ng-model="address" id="address" class="form-control" type="text" placeholder="address" name="address">
+                                        <span class="messages"></span>
+
+
+                                </div>
+
+                                <div class="form-group">
+
+
+                                        <input data-ng-model="income" id="income" class="form-control" type="number" placeholder="Income" name="income" required>
+                                        <span class="messages"></span>
+
+                                </div>
+
+                                <div class="form-group">
+
+                                        <button type="submit" ng-disabled="myForm.$invalid" class="btn btn-primary form-button" data-ng-click="saveData()">Submit</button>
+
+                                </div>
+
+                                Form: {{myForm.$invalid}}
+                            </form>*@
+
+
+
+                        <form id="myForm" ng-submit="saveData()" name="myForm">
                             <p>Please fill in the following details.</p>
-                            <input data-ng-model="name" class="form-control" placeholder="Name" type="text" required />
-                            <input data-ng-model="gender" class="form-control" placeholder="Gender" type="text" required />
-                            <input data-ng-model="dob" class="form-control" placeholder="Date Of Birth (MM/DD/YYYY)" type="text" required />
-                            <input data-ng-model="address" class="form-control" placeholder="Address" type="text" required />
-                            <input data-ng-model="income" class="form-control" placeholder="Income" type="text" required /><br />
-                            <button ng-disabled="myForm.$invalid" class="btn btn-primary form-button" data-ng-click="saveData()">Submit</button>
+                            <div class="form-group">
+                                <input id="name" name="name" data-ng-model="name" class="form-control" placeholder="Name" type="text" />
+                                <span class="messages"></span>
+                            </div>
+                            <div class="form-group">
+                                <input id="sex" name="sex" data-ng-model="gender" class="form-control" placeholder="Gender" type="text" />
+
+                                <span class="messages"></span>
+                            </div>
+                            <div class="form-group">
+
+                                <input id="dob" name="dob" data-ng-model="dob" class="form-control" placeholder="YYYY-MM-DD" type="date" />
+                                <span class="messages"></span>
+                            </div>
+                            <div class="form-group">
+                                <input id="address" name="address" data-ng-model="address" class="form-control" placeholder="Address" type="text" />
+                                <span class="messages"></span>
+                            </div>
+                            <div class="form-group">
+                                <input id="income" name="income" data-ng-model="income" class="form-control" placeholder="Income" type="text" />
+                                <span class="messages"></span>
+                            </div>
+
+
+
+
+
+
+                            <button class="btn btn-primary form-button" type="submit">Submit</button>
                         </form>
                     </div>
                 </div>
@@ -95,32 +183,7 @@
         </div>
     </div>
 
-    <div id="modal3" class="modal fade bd-example-modal-sm" tabindex="-1" role="dialog" aria-labelledby="mySmallModalLabel" aria-hidden="true">
-        <div class="modal-dialog modal-sm">
-            <div class="modal-content">
-                <div class="form-group">
-                    <div class="form-container">
-                        <form id="myForm3" name="myForm3">
-                            <p>
-                                Please fill in the following details.
-                            </p>
-                            <input data-ng-model="formObject.Name" class="form-control" placeholder="Name" type="text" />
-                            <select class="form-control" data-ng-model="formObject.Sex">
-                                <option value="Male">Male</option>
-                                <option value="Female">Female</option>
-                            </select>
-                            <input data-ng-model="formObject.DOB" class="form-control" placeholder="Date Of Birth (MM/DD/YYYY)" type="text" />
-                            <input data-ng-model="formObject.Address" class="form-control" placeholder="Address" type="text" />
-                            <input data-ng-model="formObject.Money" class="form-control" placeholder="Income" type="number" /><br />
-                            <button ng-disabled="myForm3.$invalid" class="btn btn-primary form-button" data-ng-click="editData()">Submit</button>
-                        </form>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
-
-
+    <!-- Details data modal -->
     <div id="modal2" class="modal fade bd-example-modal-sm" tabindex="-1" role="dialog" aria-labelledby="mySmallModalLabel" aria-hidden="true">
         <div class="modal-dialog modal-sm">
             <div class="modal-content">
@@ -144,8 +207,69 @@
         </div>
     </div>
 
+    <!-- Edit data modal -->
+    <div id="modal3" class="modal fade bd-example-modal-sm" tabindex="-1" role="dialog" aria-labelledby="mySmallModalLabel" aria-hidden="true">
+        <div class="modal-dialog modal-sm">
+            <div class="modal-content">
+                <div class="form-group">
+                    <div class="form-container">
+
+                        <form id="myForm3" ng-submit="editData()" name="myForm3">
+                            <p>Please fill in the following details.</p>
+                            <div class="form-group">
+                                <input id="name" name="name" data-ng-model="formObject.Name" class="form-control" placeholder="Name" type="text" />
+                                <span class="messages"></span>
+                            </div>
+                            <div class="form-group">
+                                <input id="sex" name="sex" data-ng-model="formObject.Sex" class="form-control" placeholder="Gender" type="text" />
+
+                                <span class="messages"></span>
+                            </div>
+                            <div class="form-group">
+                                <input id="dob" name="dob" data-ng-model="formObject.DOB" class="form-control" placeholder="YYYY-MM-DD" type="date" />
+                                <span class="messages"></span>
+                            </div>
+                            <div class="form-group">
+                                <input id="address" name="address" data-ng-model="formObject.Address" class="form-control" placeholder="Address" type="text" />
+                                <span class="messages"></span>
+                            </div>
+                            <div class="form-group">
+                                <input id="income" name="income" data-ng-model="formObject.Money" class="form-control" placeholder="Income" type="text" />
+                                <span class="messages"></span>
+                            </div>
+                            <button class="btn btn-primary form-button" type="submit">Submit</button>
+                        </form>
+
+                        @*<form id="myForm3" name="myForm3">
+                                <p>
+                                    Please fill in the following details.
+                                </p>
+                                <input data-ng-model="formObject.Name" class="form-control" placeholder="Name" type="text" />
+                                <select class="form-control" data-ng-model="formObject.Sex">
+                                    <option value="Male">Male</option>
+                                    <option value="Female">Female</option>
+                                </select>
+                                <input data-ng-model="formObject.DOB" class="form-control" placeholder="Date Of Birth (MM/DD/YYYY)" type="text" />
+                                <input data-ng-model="formObject.Address" class="form-control" placeholder="Address" type="text" />
+                                <input data-ng-model="formObject.Money" class="form-control" placeholder="Income" type="number" /><br />
+                                <button ng-disabled="myForm3.$invalid" class="btn btn-primary form-button" data-ng-click="editData()">Submit</button>
+                            </form>*@
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+
     <b>Total Records: </b>{{rowCollection.length}}
 </div>
 
+<script>
+
+</script>
+
 @Scripts.Render("~/bundles/application-controller")
+@Scripts.Render("~/bundles/angular-validator")
+
 

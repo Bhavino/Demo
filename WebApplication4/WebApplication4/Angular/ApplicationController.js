@@ -60,6 +60,49 @@ angular.module("myApplication", ["smart-table", "angularValidator"]).controller(
         };
 
 
+        // 2nd set of constraints for edit form with different field names
+        var iconstraints = {
+
+            iname: {
+                presence: { allowEmpty: false, message: "^Name can not be blank." },
+                format: {
+                    // We don't allow anything that a-z and 0-9
+                    pattern: "[a-zA-Z]+",
+                    // but we don't care if the username is uppercase or lowercase
+                    message: "must be alphabetic."
+                },
+                length: {
+                    maximum: 20,
+                }
+            },
+
+            isex: {
+                presence: { allowEmpty: false, message: "^Please select the gender." }
+            },
+
+            idob: {
+                presence: { allowEmpty: false, message: "^Please select the date." }
+            },
+
+            iaddress: {
+                presence: { allowEmpty: false, message: "^Address can not be blank." },
+                length: {
+                    maximum: 50
+                }
+            },
+
+            iincome: {
+                presence: { allowEmpty: false, message: "^Income can not be blank." },
+                numericality: {
+                    onlyInteger: true,
+                    greaterThanOrEqualTo: 0
+                }
+            }
+        };
+
+
+
+
 
         // Hook up the form so we can prevent it from being posted
         var form = document.querySelector("form#myForm");
@@ -87,7 +130,7 @@ angular.module("myApplication", ["smart-table", "angularValidator"]).controller(
 
         for (var i = 0; i < inputs.length; ++i) {
             inputs.item(i).addEventListener("change", function (ev) {
-                var errors2 = validate(form3, constraints) || {};
+                var errors2 = validate(form3, iconstraints) || {};
                 showErrorsForInput(this, errors2[this.name])
             });
         }
@@ -349,6 +392,8 @@ angular.module("myApplication", ["smart-table", "angularValidator"]).controller(
 
     $scope.openCreate = function () {
         $(".messages").empty();
+        $("div").removeClass("has-error");
+        document.getElementById("myForm").reset();
         $('#modal1').modal('show');
     }
 

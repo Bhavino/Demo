@@ -270,7 +270,7 @@ angular.module("myApplication", ["smart-table", "angularValidator"]).controller(
             {
                 method: 'post',
                 data: person,
-                url: 'http://localhost:49330/api/PeopleAPI'
+                url: "/api/PeopleAPI"
             });
     }
 
@@ -279,13 +279,13 @@ angular.module("myApplication", ["smart-table", "angularValidator"]).controller(
         return $http({
             method: 'put',
             data: JSON.stringify(person),
-            url: "http://localhost:49330/api/test123/"
+            url: "/api/test123/"
         });
     }
 
     //Delete Data API Call From Angular
     iController.deleteAPI = function (ID) {
-        var url = 'http://localhost:49330/api/PeopleAPI/' + ID;
+        var url = "/api/PeopleAPI/" + ID;
         return $http(
             {
                 method: 'delete',
@@ -299,19 +299,17 @@ angular.module("myApplication", ["smart-table", "angularValidator"]).controller(
 
     //Initially gets all the data
     $scope.rowCollection = [];
-    $http.get("http://localhost:49330/api/PeopleAPI/LoadData").then(function (response) {
+    $http.get("/api/PeopleAPI/LoadData").then(function (response) {
         $scope.rowCollection = response.data;
     });
 
 
     //Updates/Refreshes/Gets Data
     iController.getData = function () {
-        $http.get("http://localhost:49330/api/PeopleAPI/LoadData").then(function (response) {
+        $http.get("/api/PeopleAPI/LoadData").then(function (response) {
             $scope.rowCollection = response.data;
         });
-    }
-
-
+    };
 
     //--------------------- [Functions]---------------------------------------
 
@@ -320,12 +318,12 @@ angular.module("myApplication", ["smart-table", "angularValidator"]).controller(
 
         var person = { Name: $scope.name, Sex: $scope.gender, DOB: $scope.dob, Address: $scope.address, Money: $scope.income };
 
+
+        if (!validate(person, validationConstraint)) {
         console.log(person);
         console.log(validate(person, validationConstraint));
 
         //name, sex, dob, address, income
-
-        if (!validate(person, validationConstraint)) {
             var saveSubs = saveAPI(person);
             saveSubs.then(function (d) {
 
@@ -378,26 +376,13 @@ angular.module("myApplication", ["smart-table", "angularValidator"]).controller(
         
     };
 
-    //Details Method, Gets data by ID
-    $scope.getDataID = function (ID) {
-        $scope.modalObject = $scope.rowCollection.filter(x => x.PersonID == ID)[0];
-        $('#modal2').modal('show');
-    }
-
-    $scope.getDataID2 = function (ID) {
-        $scope.formObject = $scope.rowCollection.filter(x => x.PersonID == ID)[0];
-        $scope.formObject.DOB = new Date($scope.formObject.DOB);
-        $('#modal3').modal('show');
-    }
-
     $scope.openCreate = function () {
         $(".messages").empty();
         $("div").removeClass("has-error");
         document.getElementById("myForm").reset();
         $('#modal1').modal('show');
+
     }
-
-
     //Delete Data Function
     $scope.deleteData = function (subID) {
         var dlt = iController.deleteAPI(subID);
@@ -407,6 +392,26 @@ angular.module("myApplication", ["smart-table", "angularValidator"]).controller(
             console.log('Oops! Something went wrong while deleting the data.')
         })
     };
+
+    /* Modals */
+
+    //Details Method, Gets data by ID
+    $scope.getDataID = function (ID) {
+        $scope.modalObject = $scope.rowCollection.filter(x => x.PersonID == ID)[0];
+        $('#modal2').modal('show');
+    };
+
+    //Edit Modal, shows details of particular row id
+    $scope.getDataID2 = function (ID) {
+        $scope.formObject = angular.copy($scope.rowCollection.filter(x => x.PersonID == ID)[0]);
+        $('#modal3').modal('show');
+    };
+
+    //Displays delete modal
+    $scope.deleteConfirm = function (ID) {
+        $scope.deleteRecord = $scope.rowCollection.filter(x => x.PersonID == ID)[0];
+        $('#deleteModal').modal('show');
+    }
 
     //--------------------- [/Functions]---------------------------------------
 

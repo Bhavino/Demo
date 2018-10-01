@@ -1,6 +1,6 @@
 ﻿
 
-angular.module("myApplication", ["smart-table", "angularValidator"]).controller('safeCtrl', ['$scope', '$http', function ($scope, $http) {
+angular.module("myApplication", ["smart-table"]).controller('safeCtrl', ['$scope', '$http', function ($scope, $http) {
 
 
     (function () {
@@ -336,6 +336,8 @@ angular.module("myApplication", ["smart-table", "angularValidator"]).controller(
                 console.log("Successfully inserted data!");
 
             }, function (error) {
+            
+                console.log(error);
                 console.log('Oops! Something went wrong while saving the data.');
                 })
 

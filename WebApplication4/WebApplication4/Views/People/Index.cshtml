@@ -25,156 +25,191 @@
     <button type="button" class="btn btn-primary" data-ng-click="openCreate()">Create New Customer</button><br /><br />
 
 
-<div ng-app="myApplication" ng-controller="safeCtrl" accesskey="">
-    <b>Total Records: </b>{{rowCollection.length}}
-    <table st-table="displayedCollection" st-safe-src="rowCollection" class="table table-striped">
-        <thead>
-            <tr>
-                <th>
-                    <input st-search="Name" class="form-control" placeholder="Name" type="text" />
-                </th>
-                <th>
-                    <input st-search="Sex" class="form-control" placeholder="Gender" type="text" />
-                </th>
-                <th>
-                    <input st-search="DOB" class="form-control" placeholder="Date Of Birth" type="text" />
-                </th>
-                <th>
-                    <input st-search="Address" class="form-control" placeholder="Address" type="text" />
-                </th>
-                <th>
-                    <input st-search="Money" class="form-control" placeholder="Income" type="text" />
-                </th>
-            </tr>
+    <div ng-app="myApplication" ng-controller="safeCtrl" accesskey="">
+        <b>Total Records: </b>{{rowCollection.length}}
+        <table st-table="displayedCollection" st-safe-src="rowCollection" class="table table-striped">
+            <thead>
+                <tr>
+                    <th>
+                        <input st-search="Name" class="form-control" placeholder="Name" type="text" />
+                    </th>
+                    <th>
+                        <input st-search="Sex" class="form-control" placeholder="Gender" type="text" />
+                    </th>
+                    <th>
+                        <input st-search="DOB" class="form-control" placeholder="Date Of Birth" type="text" />
+                    </th>
+                    <th>
+                        <input st-search="Address" class="form-control" placeholder="Address" type="text" />
+                    </th>
+                    <th>
+                        <input st-search="Money" class="form-control" placeholder="Income" type="text" />
+                    </th>
+                </tr>
 
-            <tr>
-                <th st-sort="Name"> @Html.DisplayNameFor(model => model.Name)</th>
-                <th st-sort="Sex"> @Html.DisplayNameFor(model => model.Sex)</th>
-                <th st-sort="DOB"> DOB (YYYY/MM/DD)</th>
-                <th st-sort="Address"> @Html.DisplayNameFor(model => model.Address)</th>
-                <th st-sort="Money">@Html.DisplayNameFor(model => model.Money)</th>
-            </tr>
+                <tr>
+                    <th st-sort="Name"> @Html.DisplayNameFor(model => model.Name)</th>
+                    <th st-sort="Sex"> @Html.DisplayNameFor(model => model.Sex)</th>
+                    <th st-sort="DOB"> DOB (YYYY/MM/DD)</th>
+                    <th st-sort="Address"> @Html.DisplayNameFor(model => model.Address)</th>
+                    <th st-sort="Money">@Html.DisplayNameFor(model => model.Money)</th>
+                </tr>
 
-        </thead>
-        <tbody>
-            <tr ng-repeat="row in displayedCollection">
-                <td>{{row.Name}}</td>
-                <td>{{row.Sex}}</td>
-                <td>{{row.DOB | date:'yyyy/MM/dd'}}</td>
-                <td>{{row.Address}}</td>
-                <td>${{row.Money}}</td>
-                <td><a data-ng-click="getDataID2(row.PersonID)" href="#">Edit</a></td>
-                <td><a data-ng-click="getDataID(row.PersonID)" href="#">Details</a></td>
-                <td><a data-ng-click="deleteConfirm(row.PersonID)" href="#">Delete</a></td>
-            </tr>
-        </tbody>
-    </table>
+            </thead>
+            <tbody>
+                <tr ng-repeat="row in displayedCollection">
+                    <td>{{row.Name}}</td>
+                    <td>{{row.Sex}}</td>
+                    <td>{{row.DOB | date:'yyyy/MM/dd'}}</td>
+                    <td>{{row.Address}}</td>
+                    <td>${{row.Money}}</td>
+                    <td><a data-ng-click="getDataID2(row.PersonID)" href="#">Edit</a></td>
+                    <td><a data-ng-click="getDataID(row.PersonID)" href="#">Details</a></td>
+                    <td><a data-ng-click="deleteConfirm(row.PersonID)" href="#">Delete</a></td>
+                </tr>
+            </tbody>
+        </table>
 
-    <!-- Modals -->
-
-
-    <!-- Create data modal -->
-    <div id="modal1" class="modal fade bd-example-modal-lg" tabindex="-1" role="dialog" aria-labelledby="mySmallModalLabel" aria-hidden="true">
-        <div class="modal-dialog modal-lg">
-            <div class="modal-content">
-                <div class="form-group">
-                    <div class="form-container">
+        <!-- Modals -->
+        <!-- Create data modal -->
+        <div id="modal1" class="modal fade bd-example-modal-lg" tabindex="-1" role="dialog" aria-labelledby="mySmallModalLabel" aria-hidden="true">
+            <div class="modal-dialog modal-lg">
+                <div class="modal-content">
+                    <div class="form-group">
+                        <div class="form-container">
 
 
-                       
-                    <form id="myForm" ng-submit="saveData()" name="myForm">
-                            <p>Please fill in the following details.</p>
-                            <div class="form-group">
-                                <input id="name" name="name" data-ng-model="name" class="form-control" placeholder="Name" type="text" />
-                                <span class="messages"></span>
-                            </div>
-                            <div class="form-group">
-                                <input id="sex" name="sex" data-ng-model="gender" class="form-control" placeholder="Gender" type="text" />
 
-                                <span class="messages"></span>
-                            </div>
-                            <div class="form-group">
+                            <form id="myForm" ng-submit="saveData()" name="myForm">
+                                <p>Please fill in the following details.</p>
+                                <div class="form-group">
+                                    <input id="name" name="name" data-ng-model="name" class="form-control" placeholder="Name" type="text" />
+                                    <span class="messages"></span>
+                                </div>
+                                <div class="form-group">
+                                    <input id="sex" name="sex" data-ng-model="gender" class="form-control" placeholder="Gender" type="text" />
 
-                                <input id="dob" name="dob" data-ng-model="dob" class="form-control" placeholder="YYYY-MM-DD" type="date" />
-                                <span class="messages"></span>
-                            </div>
-                            <div class="form-group">
-                                <input id="address" name="address" data-ng-model="address" class="form-control" placeholder="Address" type="text" />
-                                <span class="messages"></span>
-                            </div>
-                            <div class="form-group">
-                                <input id="income" name="income" data-ng-model="income" class="form-control" placeholder="Income" type="text" />
-                                <span class="messages"></span>
-                            </div>
+                                    <span class="messages"></span>
+                                </div>
+                                <div class="form-group">
 
-                            <button class="btn btn-primary form-button" type="submit">Submit</button>
-                        </form>
+                                    <input id="dob" name="dob" data-ng-model="dob" class="form-control" placeholder="YYYY-MM-DD" type="date" />
+                                    <span class="messages"></span>
+                                </div>
+                                <div class="form-group">
+                                    <input id="address" name="address" data-ng-model="address" class="form-control" placeholder="Address" type="text" />
+                                    <span class="messages"></span>
+                                </div>
+                                <div class="form-group">
+                                    <input id="income" name="income" data-ng-model="income" class="form-control" placeholder="Income" type="text" />
+                                    <span class="messages"></span>
+                                </div>
+
+                                <button class="btn btn-primary form-button" type="submit">Submit</button>
+                            </form>
+                        </div>
                     </div>
                 </div>
             </div>
         </div>
-    </div>
 
+        <!-- Edit data modal -->
+        <div id="modal3" class="modal fade bd-example-modal-sm" tabindex="-1" role="dialog" aria-labelledby="mySmallModalLabel" aria-hidden="true">
+            <div class="modal-dialog modal-sm">
+                <div class="modal-content">
+                    <div class="form-group">
+                        <div class="form-container">
 
+                            <form id="myForm3" ng-submit="editData()" name="myForm3">
+                                <p>Please fill in the following details.</p>
+                                <div class="form-group">
+                                    <input id="iname" name="iname" data-ng-model="formObject.Name" class="form-control" placeholder="Name" type="text" />
+                                    <span class="messages"></span>
+                                </div>
+                                <div class="form-group">
+                                    <input id="isex" name="isex" data-ng-model="formObject.Sex" class="form-control" placeholder="Gender" type="text" />
 
-  <!-- Details data modal -->
-    <div id="modal2" class="modal fade bd-example-modal-sm" tabindex="-1" role="dialog" aria-labelledby="mySmallModalLabel" aria-hidden="true">
-        <div class="modal-dialog modal-sm">
-            <div class="modal-content">
-                <div class="form-group">
-                    <div class="form-container">
-                        <form id="myForm2" name="myForm2">
-                            <p>Here are the customer details.</p>
-                            <p>
-                                <b>Customer ID</b>: {{modalObject.PersonID}}
-                            </p>
-                            <p><b>Name</b>: {{modalObject.Name}}</p>
-                            <p><b>Gender</b>: {{modalObject.Sex}}</p>
-                            <p><b>DOB</b>: {{modalObject.DOB}}</p>
-                            <p><b>Address</b>: {{modalObject.Address}}</p>
-                            <p><b>Money</b>: ${{modalObject.Money}}</p>
-                            <button data-toggle="modal" data-target="#modal2" class="btn btn-primary form-button">Close</button>
-                        </form>
+                                    <span class="messages"></span>
+                                </div>
+                                <div class="form-group">
+                                    <input id="idob" name="idob" data-ng-model="formObject.DOB" class="form-control" placeholder="YYYY-MM-DD" type="date" />
+                                    <span class="messages"></span>
+                                </div>
+                                <div class="form-group">
+                                    <input id="iaddress" name="iaddress" data-ng-model="formObject.Address" class="form-control" placeholder="Address" type="text" />
+                                    <span class="messages"></span>
+                                </div>
+                                <div class="form-group">
+                                    <input id="iincome" name="iincome" data-ng-model="formObject.Money" class="form-control" placeholder="Income" type="text" />
+                                    <span class="messages"></span>
+                                </div>
+                                <button class="btn btn-primary form-button" type="submit">Submit</button>
+                            </form>
+                        </div>
                     </div>
                 </div>
             </div>
         </div>
-    </div>
-    
-    
 
-    
-    <!-- Delete Confirmation Modal -->
-    <div id="deleteModal" class="modal fade bd-example-modal-sm" tabindex="-1" role="dialog" aria-labelledby="mySmallModalLabel" aria-hidden="true">
-        <div class="modal-dialog modal-sm">
-            <div class="modal-content">
-                <div class="form-group">
-                    <div class="form-container">
-                        <form id="deleteForm" name="deleteForm">
-                            <p>Are you sure you want to delete this record?</p>
-                            <p>
-                                <b>Customer ID</b>: {{deleteRecord.PersonID}}
-                            </p>
-                            <p><b>Name</b>: {{deleteRecord.Name}}</p>
-                            <p><b>Gender</b>: {{deleteRecord.Sex}}</p>
-                            <p><b>DOB</b>: {{deleteRecord.DOB}}</p>
-                            <p><b>Address</b>: {{deleteRecord.Address}}</p>
-                            <p><b>Money</b>: ${{deleteRecord.Money}}</p>
-                            <button data-toggle="modal" data-target="#deleteModal" class="btn btn-primary form-button" data-ng-click="deleteData(deleteRecord.PersonID)">Confirm</button>
-                            <button data-toggle="modal" data-target="#deleteModal" class="btn btn-primary form-button">Cancel</button>
-                        </form>
+
+        <!-- Details data modal -->
+        <div id="modal2" class="modal fade bd-example-modal-sm" tabindex="-1" role="dialog" aria-labelledby="mySmallModalLabel" aria-hidden="true">
+            <div class="modal-dialog modal-sm">
+                <div class="modal-content">
+                    <div class="form-group">
+                        <div class="form-container">
+                            <form id="myForm2" name="myForm2">
+                                <p>Here are the customer details.</p>
+                                <p>
+                                    <b>Customer ID</b>: {{modalObject.PersonID}}
+                                </p>
+                                <p><b>Name</b>: {{modalObject.Name}}</p>
+                                <p><b>Gender</b>: {{modalObject.Sex}}</p>
+                                <p><b>DOB</b>: {{modalObject.DOB}}</p>
+                                <p><b>Address</b>: {{modalObject.Address}}</p>
+                                <p><b>Money</b>: ${{modalObject.Money}}</p>
+                                <button data-toggle="modal" data-target="#modal2" class="btn btn-primary form-button">Close</button>
+                            </form>
+                        </div>
                     </div>
                 </div>
             </div>
         </div>
+
+
+
+
+        <!-- Delete Confirmation Modal -->
+        <div id="deleteModal" class="modal fade bd-example-modal-sm" tabindex="-1" role="dialog" aria-labelledby="mySmallModalLabel" aria-hidden="true">
+            <div class="modal-dialog modal-sm">
+                <div class="modal-content">
+                    <div class="form-group">
+                        <div class="form-container">
+                            <form id="deleteForm" name="deleteForm">
+                                <p>Are you sure you want to delete this record?</p>
+                                <p>
+                                    <b>Customer ID</b>: {{deleteRecord.PersonID}}
+                                </p>
+                                <p><b>Name</b>: {{deleteRecord.Name}}</p>
+                                <p><b>Gender</b>: {{deleteRecord.Sex}}</p>
+                                <p><b>DOB</b>: {{deleteRecord.DOB}}</p>
+                                <p><b>Address</b>: {{deleteRecord.Address}}</p>
+                                <p><b>Money</b>: ${{deleteRecord.Money}}</p>
+                                <button data-toggle="modal" data-target="#deleteModal" class="btn btn-primary form-button" data-ng-click="deleteData(deleteRecord.PersonID)">Confirm</button>
+                                <button data-toggle="modal" data-target="#deleteModal" class="btn btn-primary form-button">Cancel</button>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <b>Total Records: </b>{{rowCollection.length}}
     </div>
 
-    <b>Total Records: </b>{{rowCollection.length}}
-</div>
+    <script>
 
-<script>
+    </script>
 
-</script>
-
-@Scripts.Render("~/bundles/application-controller")
+    @Scripts.Render("~/bundles/application-controller")
 

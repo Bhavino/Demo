@@ -332,18 +332,14 @@ angular.module("myApplication", ["smart-table"]).controller('safeCtrl', ['$scope
                     $scope.rowCollection = response.data;
                 });
                 document.getElementById("myForm").reset();
-                person = {};
+                
                 console.log("Successfully inserted data!");
 
             }, function (error) {
                 console.log('Oops! Something went wrong while saving the data.');
                 })
 
-        }
-        
-
-
-        
+        } 
     };
 
     //Edit Data Function
@@ -351,9 +347,12 @@ angular.module("myApplication", ["smart-table"]).controller('safeCtrl', ['$scope
         
         var person = $scope.formObject;
 
+        $scope.errorMessage = '';
+
+        
+
         console.log(person);
         console.log(validate(person, validationConstraint));
-
 
         if (!validate(person, validationConstraint)) {
             var editFunction = iController.editAPI2(person);
@@ -364,16 +363,18 @@ angular.module("myApplication", ["smart-table"]).controller('safeCtrl', ['$scope
 
                 iController.getData();
 
-                //document.getElementById("myForm3").reset();
                 console.log("Successfully inserted dataa!");
 
-
-
             }, function (error) {
-                console.log('Oops! Something went wrong while saving the data.');
+
+                $scope.errorMessage = error.data.NameError;
+                console.log($scope.errorMessage);
+
+                //console.log('Oops! Something went wrong while saving the data.');
+
+
             })
         }
-        
     };
 
     $scope.openCreate = function () {
@@ -403,9 +404,11 @@ angular.module("myApplication", ["smart-table"]).controller('safeCtrl', ['$scope
 
     //Edit Modal, shows details of particular row id
     $scope.getDataID2 = function (ID) {
+        $scope.errorMessage = ''; //clears previous error messages if exist
         $scope.formObject = angular.copy($scope.rowCollection.filter(x => x.PersonID == ID)[0]);
         $scope.formObject.DOB = new Date($scope.formObject.DOB);
         $('#modal3').modal('show');
+
     };
 
     //Displays delete modal

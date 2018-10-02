@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Data;
 using System.Data.Entity;
 using System.Data.Entity.Infrastructure;
+using System.Dynamic;
 using System.Linq;
 using System.Net;
 using System.Net.Http;
@@ -52,6 +53,15 @@ namespace WebApplication4.Controllers
         [Route("api/test123")]
         public IHttpActionResult PutPerson(Person person)
         {
+            dynamic errorMessages = new ExpandoObject();
+
+            //Name//
+            if (person.Name.Length < 20)
+            {
+                errorMessages.NameError = "Name length is not long enough";
+                return Content(HttpStatusCode.BadRequest, errorMessages);
+            }
+
             if (!ModelState.IsValid)
             {
                 return BadRequest(ModelState);

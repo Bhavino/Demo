@@ -7,6 +7,7 @@ using System.Dynamic;
 using System.Linq;
 using System.Net;
 using System.Net.Http;
+using System.Text.RegularExpressions;
 using System.Web.Http;
 using System.Web.Http.Description;
 using WebApplication4;
@@ -25,8 +26,6 @@ namespace WebApplication4.Controllers
             var results = db.Database.SqlQuery<Person>(sql).ToList<Person>();
             return Ok(results);
         }
-
-       
 
         // GET: api/PeopleAPI
         public IQueryable<Person> GetPeople()
@@ -48,18 +47,33 @@ namespace WebApplication4.Controllers
         }
 
         // PUT: api/PeopleAPI/5
-
         [ResponseType(typeof(void))]
         [Route("api/test123")]
         public IHttpActionResult PutPerson(Person person)
         {
-            dynamic errorMessages = new ExpandoObject();
+            //Name, Sex, DOB, Address, Money
+            dynamic error = new ExpandoObject();
 
-            //Name//
-            if (person.Name.Length < 20)
+            /* NAME */
+
+            //Checks length
+            if (person.Name.Length < 1)
             {
-                errorMessages.NameError = "Name length is not long enough";
-                return Content(HttpStatusCode.BadRequest, errorMessages);
+                error.msg = "Name length is too short!";
+
+                return Content(HttpStatusCode.BadRequest, error);
+            }
+
+            //Check if alphabetic
+            if (Regex.IsMatch(person.Name, @"^[a-zA-Z]+$") == false)
+            { 
+                error.name = "NNNName is not alphabetic.";
+                error.sex = "test";
+                error.dob = "test";
+                error.address = "test";
+                error.money = "test";
+
+                return Content(HttpStatusCode.BadRequest, error);
             }
 
             if (!ModelState.IsValid)

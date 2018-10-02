@@ -1,7 +1,7 @@
 KP
 
 - Delete confirmation (DONE)
-- Revert data if edit is cancelled
+- Revert data if edit is cancelled (DONE)
 - Validate Input (Server Side)
 
 BM

@@ -150,27 +150,26 @@
                                 <p>Please fill in the following details.</p>
                                 <div class="form-group">
                                     <input id="iname" name="iname" data-ng-model="formObject.Name" class="form-control" placeholder="Name" type="text" />
-                                    <span class="messages"></span>
+                                    <span class="messages">{{errorList.name}}</span>
                                 </div>
                                 <div class="form-group">
                                     <input id="isex" name="isex" data-ng-model="formObject.Sex" class="form-control" placeholder="Gender" type="text" />
-
-                                    <span class="messages"></span>
+                                    <span class="messages">{{errorList.sex}}</span>
                                 </div>
                                 <div class="form-group">
                                     <input id="idob" name="idob" data-ng-model="formObject.DOB" class="form-control" placeholder="YYYY-MM-DD" type="date" />
-                                    <span class="messages"></span>
+                                    <span class="messages">{{errorList.dob}}</span>
                                 </div>
                                 <div class="form-group">
                                     <input id="iaddress" name="iaddress" data-ng-model="formObject.Address" class="form-control" placeholder="Address" type="text" />
-                                    <span class="messages"></span>
+                                    <span class="messages">{{errorList.address}}</span>
                                 </div>
                                 <div class="form-group">
                                     <input id="iincome" name="iincome" data-ng-model="formObject.Money" class="form-control" placeholder="Income" type="text" />
-                                    <span class="messages"></span>
+                                    <span class="messages">{{errorList.money}}</span>
                                 </div>
                                 <button class="btn btn-primary form-button" type="submit">Submit</button>
-                                <p>{{errorMessage}}</p>
+                                
                             </form>
                         </div>
                     </div>

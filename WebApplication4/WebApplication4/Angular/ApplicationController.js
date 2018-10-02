@@ -347,9 +347,13 @@ angular.module("myApplication", ["smart-table"]).controller('safeCtrl', ['$scope
         
         var person = $scope.formObject;
 
-        $scope.errorMessage = '';
-
-        
+        $scope.errorList = {
+            name: '',
+            sex: '',
+            dob: '',
+            address: '',
+            money: ''
+        };
 
         console.log(person);
         console.log(validate(person, validationConstraint));
@@ -367,12 +371,15 @@ angular.module("myApplication", ["smart-table"]).controller('safeCtrl', ['$scope
 
             }, function (error) {
 
-                $scope.errorMessage = error.data.NameError;
-                console.log($scope.errorMessage);
+                $scope.errorList.name = error.data.name;
+                $scope.errorList.sex = error.data.sex;
+                $scope.errorList.dob = error.data.dob;
+                $scope.errorList.address = error.data.address;
+                $scope.errorList.money = error.data.money;
+
+                console.log(error.data);
 
                 //console.log('Oops! Something went wrong while saving the data.');
-
-
             })
         }
     };
@@ -404,7 +411,14 @@ angular.module("myApplication", ["smart-table"]).controller('safeCtrl', ['$scope
 
     //Edit Modal, shows details of particular row id
     $scope.getDataID2 = function (ID) {
-        $scope.errorMessage = ''; //clears previous error messages if exist
+
+        //clears previous error messages if exist
+        //$scope.errorList.name = '';
+        //$scope.errorList.sex = '';
+        //$scope.errorList.dob = '';
+        //$scope.errorList.address = '';
+        //$scope.errorList.money = '';
+
         $scope.formObject = angular.copy($scope.rowCollection.filter(x => x.PersonID == ID)[0]);
         $scope.formObject.DOB = new Date($scope.formObject.DOB);
         $('#modal3').modal('show');

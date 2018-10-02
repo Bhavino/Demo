@@ -1,6 +1,6 @@
 ﻿
 
-angular.module("myApplication", ["smart-table", "angularValidator"]).controller('safeCtrl', ['$scope', '$http', function ($scope, $http) {
+angular.module("myApplication", ["smart-table"]).controller('safeCtrl', ['$scope', '$http', function ($scope, $http) {
 
 
     (function () {
@@ -404,6 +404,7 @@ angular.module("myApplication", ["smart-table", "angularValidator"]).controller(
     //Edit Modal, shows details of particular row id
     $scope.getDataID2 = function (ID) {
         $scope.formObject = angular.copy($scope.rowCollection.filter(x => x.PersonID == ID)[0]);
+        $scope.formObject.DOB = new Date($scope.formObject.DOB);
         $('#modal3').modal('show');
     };
 

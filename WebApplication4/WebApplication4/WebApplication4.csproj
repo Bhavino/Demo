@@ -1057,15 +1057,9 @@
     <Content Include="Views\Home\About.cshtml" />
     <Content Include="Views\Home\Contact.cshtml" />
     <Content Include="Views\Home\Index.cshtml" />
-    <Content Include="Views\People\Create.cshtml" />
-    <Content Include="Views\People\Delete.cshtml" />
-    <Content Include="Views\People\Details.cshtml" />
-    <Content Include="Views\People\Edit.cshtml" />
     <Content Include="Views\People\Index.cshtml" />
     <Content Include="Scripts\version.json" />
-    <Content Include="Views\People\Angular.cshtml" />
     <Content Include="Scripts\smart-table.min.js.map" />
-    <Content Include="Views\People\List.cshtml" />
     <Content Include="Scripts\underscore.min.map" />
   </ItemGroup>
   <ItemGroup>

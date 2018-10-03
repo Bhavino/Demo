@@ -2,7 +2,6 @@
 
 angular.module("myApplication", ["smart-table"]).controller('safeCtrl', ['$scope', '$http', function ($scope, $http) {
 
-
     (function () {
         // Before using it we must add the parse and format functions
         // Here is a sample implementation using moment.js
@@ -59,7 +58,6 @@ angular.module("myApplication", ["smart-table"]).controller('safeCtrl', ['$scope
             }
         };
 
-
         // 2nd set of constraints for edit form with different field names
         var iconstraints = {
 
@@ -100,10 +98,6 @@ angular.module("myApplication", ["smart-table"]).controller('safeCtrl', ['$scope
             }
         };
 
-
-
-
-
         // Hook up the form so we can prevent it from being posted
         var form = document.querySelector("form#myForm");
         form.addEventListener("submit", function (ev) {
@@ -134,8 +128,6 @@ angular.module("myApplication", ["smart-table"]).controller('safeCtrl', ['$scope
                 showErrorsForInput(this, errors2[this.name])
             });
         }
-
-
 
         function handleFormSubmit(form, input) {
             // validate the form aainst the constraints
@@ -217,9 +209,7 @@ angular.module("myApplication", ["smart-table"]).controller('safeCtrl', ['$scope
         }
     }
 
-
     )();
-
 
     var validationConstraint = {
 
@@ -296,7 +286,6 @@ angular.module("myApplication", ["smart-table"]).controller('safeCtrl', ['$scope
 
     //--------------------- [/API]---------------------------------------
 
-
     //Initially gets all the data
     $scope.rowCollection = [];
     $http.get("/api/PeopleAPI/LoadData").then(function (response) {
@@ -336,10 +325,26 @@ angular.module("myApplication", ["smart-table"]).controller('safeCtrl', ['$scope
                 console.log("Successfully inserted data!");
 
             }, function (error) {
+
+                //Gets all error messages returned from the WebAPI
+                $scope.errorList.name = error.data.name;
+                $scope.errorList.sex = error.data.sex;
+                $scope.errorList.dob = error.data.dob;
+                $scope.errorList.address = error.data.address;
+                $scope.errorList.money = error.data.money;
                 console.log('Oops! Something went wrong while saving the data.');
                 })
 
         } 
+    };
+
+    //List object used to store error messages return from WebAPI controller
+    $scope.errorList = {
+        name: '',
+        sex: '',
+        dob: '',
+        address: '',
+        money: ''
     };
 
     //Edit Data Function
@@ -347,18 +352,8 @@ angular.module("myApplication", ["smart-table"]).controller('safeCtrl', ['$scope
         
         var person = $scope.formObject;
 
-        $scope.errorList = {
-            name: '',
-            sex: '',
-            dob: '',
-            address: '',
-            money: ''
-        };
+        //if (!validate(person, validationConstraint)) {
 
-        console.log(person);
-        console.log(validate(person, validationConstraint));
-
-        if (!validate(person, validationConstraint)) {
             var editFunction = iController.editAPI2(person);
 
             editFunction.then(function (d) {
@@ -371,23 +366,23 @@ angular.module("myApplication", ["smart-table"]).controller('safeCtrl', ['$scope
 
             }, function (error) {
 
+                //Gets all error messages returned from the WebAPI
                 $scope.errorList.name = error.data.name;
                 $scope.errorList.sex = error.data.sex;
                 $scope.errorList.dob = error.data.dob;
                 $scope.errorList.address = error.data.address;
                 $scope.errorList.money = error.data.money;
 
-                console.log(error.data);
-
                 //console.log('Oops! Something went wrong while saving the data.');
             })
-        }
+        //}
     };
 
     $scope.openCreate = function () {
         $(".messages").empty();
         $("div").removeClass("has-error");
         document.getElementById("myForm").reset();
+        $scope.errorList = { name: "", sex: "", dob: "", address: "", money: "" };
         $('#modal1').modal('show');
 
     }
@@ -412,17 +407,12 @@ angular.module("myApplication", ["smart-table"]).controller('safeCtrl', ['$scope
     //Edit Modal, shows details of particular row id
     $scope.getDataID2 = function (ID) {
 
-        //clears previous error messages if exist
-        //$scope.errorList.name = '';
-        //$scope.errorList.sex = '';
-        //$scope.errorList.dob = '';
-        //$scope.errorList.address = '';
-        //$scope.errorList.money = '';
-
+        //clears previous error messages
+        $scope.errorList = { name: "", sex: "", dob: "", address: "", money: "" };
+        
         $scope.formObject = angular.copy($scope.rowCollection.filter(x => x.PersonID == ID)[0]);
         $scope.formObject.DOB = new Date($scope.formObject.DOB);
         $('#modal3').modal('show');
-
     };
 
     //Displays delete modal

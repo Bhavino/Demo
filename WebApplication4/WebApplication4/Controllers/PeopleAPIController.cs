@@ -46,34 +46,76 @@ namespace WebApplication4.Controllers
             return Ok(person);
         }
 
-        // PUT: api/PeopleAPI/5
+        
+        // PUT: api/test123
         [ResponseType(typeof(void))]
         [Route("api/test123")]
         public IHttpActionResult PutPerson(Person person)
         {
             //Name, Sex, DOB, Address, Money
-            dynamic error = new ExpandoObject();
+            dynamic errorList = new ExpandoObject();
+
+            errorList.name = "";
+            errorList.sex = "";
+            errorList.address = "";
+            errorList.money = "";
 
             /* NAME */
-
             //Checks length
-            if (person.Name.Length < 1)
+            if (person.Name.Length < 1 || person.Name.Length > 20)
             {
-                error.msg = "Name length is too short!";
+                errorList.name = "Name length is too short";
+            }
 
-                return Content(HttpStatusCode.BadRequest, error);
+            //Checks alphabetic
+            if (Regex.IsMatch(person.Name, @"^[a-zA-Z]+$") == false)
+            {
+                errorList.name = "Name should only contain letters";
+            }
+
+            /* Sex */
+            //Checks length
+            if (person.Sex.Length < 1 || person.Sex.Length > 10)
+            {
+                errorList.sex = "Sex length is too short";
             }
 
             //Check if alphabetic
-            if (Regex.IsMatch(person.Name, @"^[a-zA-Z]+$") == false)
-            { 
-                error.name = "NNNName is not alphabetic.";
-                error.sex = "test";
-                error.dob = "test";
-                error.address = "test";
-                error.money = "test";
+            if (Regex.IsMatch(person.Sex, @"^[a-zA-Z]+$") == false)
+            {
+                errorList.sex = "Sex should only contain letters";
+            }
 
-                return Content(HttpStatusCode.BadRequest, error);
+            /* Address */
+            //Checks length
+            if (person.Address.Length < 1 || person.Address.Length > 50)
+            {
+                errorList.address = "Address length is too short";
+            }
+
+            /* Moey */
+            //Checks length
+            if (person.Money.ToString().Length < 1 || person.Money.ToString().Length > 50)
+            {
+                errorList.money = "Money length is too short";
+            }
+
+            //Checks negative
+            if (person.Money < 0)
+            {
+                errorList.money = "Money should not be negative";
+            }
+
+            //Checks is a number
+            if (!Regex.IsMatch(person.Money.ToString(), @"^\d+\.{0,1}\d+$"))
+            {
+                errorList.money = "Money should only be numbers";
+            }
+
+            //if errorList is empy, no errors are returned
+            if (errorList.name != "" || errorList.sex != "" || errorList.address != "" || errorList.money != "")
+            {
+                return Content(HttpStatusCode.BadRequest, errorList);
             }
 
             if (!ModelState.IsValid)
@@ -94,11 +136,78 @@ namespace WebApplication4.Controllers
 
             return StatusCode(HttpStatusCode.NoContent);
         }
+        
 
         // POST: api/PeopleAPI
         [ResponseType(typeof(Person))]
         public IHttpActionResult PostPerson(Person person)
         {
+            //Name, Sex, DOB, Address, Money
+            dynamic errorList = new ExpandoObject();
+
+            errorList.name = "";
+            errorList.sex = "";
+            errorList.address = "";
+            errorList.money = "";
+
+            /* NAME */
+            //Checks length
+            if (person.Name.Length < 1 || person.Name.Length > 20)
+            {
+                errorList.name = "Name length is too short";
+            }
+
+            //Checks alphabetic
+            if (Regex.IsMatch(person.Name, @"^[a-zA-Z]+$") == false)
+            {
+                errorList.name = "Name should only contain letters";
+            }
+
+            /* Sex */
+            //Checks length
+            if (person.Sex.Length < 1 || person.Sex.Length > 10)
+            {
+                errorList.sex = "Sex length is too short";
+            }
+
+            //Check if alphabetic
+            if (Regex.IsMatch(person.Sex, @"^[a-zA-Z]+$") == false)
+            {
+                errorList.sex = "Sex should only contain letters";
+            }
+
+            /* Address */
+            //Checks length
+            if (person.Address.Length < 1 || person.Address.Length > 50)
+            {
+                errorList.address = "Address length is too short";
+            }
+
+            /* Moey */
+            //Checks length
+            if (person.Money.ToString().Length < 1 || person.Money.ToString().Length > 50)
+            {
+                errorList.money = "Money length is too short";
+            }
+
+            //Checks negative
+            if (person.Money < 0)
+            {
+                errorList.money = "Money should not be negative";
+            }
+
+            //Checks is a number
+            if (!Regex.IsMatch(person.Money.ToString(), @"^\d+\.{0,1}\d+$"))
+            {
+                errorList.money = "Money should only be numbers";
+            }
+
+            //if errorList is empy, no errors are returned
+            if (errorList.name != "" || errorList.sex != "" || errorList.address != "" || errorList.money != "")
+            {
+                return Content(HttpStatusCode.BadRequest, errorList);
+            }
+
             if (!ModelState.IsValid)
             {
                 return BadRequest(ModelState);

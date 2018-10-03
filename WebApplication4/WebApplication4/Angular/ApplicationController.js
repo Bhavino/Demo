@@ -302,22 +302,28 @@ angular.module("myApplication", ["smart-table"]).controller('safeCtrl', ['$scope
 
     //--------------------- [Functions]---------------------------------------
 
+    //List object used to store error messages return from WebAPI controller
+    $scope.errorList = {
+        name: '',
+        sex: '',
+        dob: '',
+        address: '',
+        money: ''
+    };
+
     //Sava Data Function
     $scope.saveData = function () {
 
         var person = { Name: $scope.name, Sex: $scope.gender, DOB: $scope.dob, Address: $scope.address, Money: $scope.income };
 
-
         if (!validate(person, validationConstraint)) {
-        console.log(person);
-        console.log(validate(person, validationConstraint));
 
         //name, sex, dob, address, income
             var saveSubs = saveAPI(person);
             saveSubs.then(function (d) {
 
                 $('#modal1').modal('hide');
-                $http.get("http://localhost:49330/api/PeopleAPI/LoadData").then(function (response) {
+                $http.get("/api/PeopleAPI/LoadData").then(function (response) {
                     $scope.rowCollection = response.data;
                 });
                 document.getElementById("myForm").reset();
@@ -332,19 +338,10 @@ angular.module("myApplication", ["smart-table"]).controller('safeCtrl', ['$scope
                 $scope.errorList.dob = error.data.dob;
                 $scope.errorList.address = error.data.address;
                 $scope.errorList.money = error.data.money;
+
                 console.log('Oops! Something went wrong while saving the data.');
                 })
-
         } 
-    };
-
-    //List object used to store error messages return from WebAPI controller
-    $scope.errorList = {
-        name: '',
-        sex: '',
-        dob: '',
-        address: '',
-        money: ''
     };
 
     //Edit Data Function
@@ -372,20 +369,10 @@ angular.module("myApplication", ["smart-table"]).controller('safeCtrl', ['$scope
                 $scope.errorList.dob = error.data.dob;
                 $scope.errorList.address = error.data.address;
                 $scope.errorList.money = error.data.money;
-
-                //console.log('Oops! Something went wrong while saving the data.');
             })
         //}
     };
 
-    $scope.openCreate = function () {
-        $(".messages").empty();
-        $("div").removeClass("has-error");
-        document.getElementById("myForm").reset();
-        $scope.errorList = { name: "", sex: "", dob: "", address: "", money: "" };
-        $('#modal1').modal('show');
-
-    }
     //Delete Data Function
     $scope.deleteData = function (subID) {
         var dlt = iController.deleteAPI(subID);
@@ -396,7 +383,18 @@ angular.module("myApplication", ["smart-table"]).controller('safeCtrl', ['$scope
         })
     };
 
-    /* Modals */
+    //--------------------- [/Functions]---------------------------------------
+
+    //----------------[Modals]-------------------------
+
+    //Creation Modal
+    $scope.openCreate = function () {
+        $(".messages").empty();
+        $("div").removeClass("has-error");
+        document.getElementById("myForm").reset();
+        $scope.errorList = { name: "", sex: "", dob: "", address: "", money: "" };
+        $('#modal1').modal('show');
+    }
 
     //Details Method, Gets data by ID
     $scope.getDataID = function (ID) {
@@ -421,8 +419,7 @@ angular.module("myApplication", ["smart-table"]).controller('safeCtrl', ['$scope
         $('#deleteModal').modal('show');
     }
 
-    //--------------------- [/Functions]---------------------------------------
-
+    //--------------------- [/Modals]---------------------------------------
 
     //----------------[Client Side Validations]-------------------------
 

@@ -27,9 +27,6 @@ namespace WebApplication4.Controllers
             return db.People;
         }
 
-
-
-
         public JsonResult GetPersons()
         {
 
